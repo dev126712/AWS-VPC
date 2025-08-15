@@ -140,3 +140,190 @@ I had to update my second EC2 instance's security group because it didnt allow i
 ---
 
 ---
+
+
+<img src="https://cdn.prod.website-files.com/677c400686e724409a5a7409/6790ad949cf622dc8dcd9fe4_nextwork-logo-leather.svg" alt="NextWork" width="300" />
+
+# VPC Endpoints
+
+**Project Link:** [View Project](http://learn.nextwork.org/projects/aws-networks-endpoints)
+
+**Author:** Alexandre St-fort  
+**Email:** stforta1@gmail.com
+
+---
+
+## VPC Endpoints
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_09bcaa8a)
+
+---
+
+## Introducing Today's Project!
+
+### What is Amazon VPC?
+
+.....
+
+### How I used Amazon VPC in this project
+
+....
+
+### One thing I didn't expect in this project was...
+
+......
+
+### This project took me...
+
+.....
+
+---
+
+## In the first part of my project...
+
+### Step 1 - Architecture set up
+
+Create A VPC Endpoint and connecting it to my ec2 instance and my s3 bucket
+
+### Step 2 - Connect to EC2 instance
+
+.......
+
+### Step 3 - Set up access keys
+
+.........
+
+### Step 4 - Interact with S3 bucket
+
+.......
+
+---
+
+## Architecture set up
+
+......
+
+.....
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d777)
+
+---
+
+## Access keys
+
+### Credentials
+
+.......
+
+........
+
+.........
+
+### Best practice
+
+........
+
+---
+
+## Connecting to my S3 bucket
+
+.........
+
+...........
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d778)
+
+---
+
+## Connecting to my S3 bucket
+
+.......
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d779)
+
+---
+
+## Uploading objects to S3
+
+........
+
+............
+
+..........
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_3e1e79a2)
+
+---
+
+## In the second part of my project...
+
+### Step 5 - Set up a Gateway
+
+Set up a way for your VPC and S3 to communicate direclty.
+
+### Step 6 - Bucket policies
+
+In this step i'm going to test my VPC endpoint to make sure taht my ec2 do not the public internet to get access to my s3 bucket by denying or blocking all access from the bucket through internet except by my VPC Endpoint.
+
+### Step 7 - Update route tables
+
+I'm going to see if i can access my s3 bucket through me ec2 instance like my policy is supposed to do.
+
+### Step 8 - Validate endpoint conection
+
+.....
+
+---
+
+## Setting up a Gateway
+
+I set up an S3 Gateway, wich is a type of endpoint used specifically for Amazon S3 and DynamoDB
+
+### What are endpoints?
+
+An endpoint is a service that allows private connection between AWS services and my VPC.
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_09bcaa8a)
+
+---
+
+## Bucket policies
+
+A bucket policy is a type of IAM policy designed for setting access permissions to an S3 bucket. 
+
+My bucket policy will deny all access from the internet except from my vpc endpoint
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_7316a13d)
+
+---
+
+## Bucket policies
+
+Right after saving my bucket policy, my S3 bucket page showed 'denied access' warnings. This was because my policy made my s3 bucket not accesible from the internet even from  AWS Management Console.
+
+I also had to update my route table because the only ways to access my s3 bucket was by the internet not by my vpc endpoint
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4ec7821f)
+
+---
+
+## Route table updates
+
+To update my route table, I had to indicate that if my ec2 want to access my s3 bucket it had to go through my vpc endpoint instead.
+
+After updating my public subnet's route table, my terminal could return me the files in my bucket
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_d116818e)
+
+---
+
+## Endpoint policies
+
+An endpoint policy is rules to gives acces or denying access to my AWS services
+
+I updated my endpoint's policy by the 'Effect' from allows to denied I could see the effect of this right away, because i couldn't access my s3 files from my ec2
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_3e1e79a3)
+
+---
+
