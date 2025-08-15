@@ -5,39 +5,24 @@
 
 ## VPC Peering
 
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_88727bef)
+![alt text](https://github.com/dev126712/AWS-VPC/blob/1addf6212559a84062714e4dda45815ba98ca324/VpcPeering.png)
 
 ---
-
-## Introducing Today's Project!
+![alt text]()
 
 ### What is Amazon VPC?
 
-Amazon VPC is your own private or public network inside my AWS cloud region
+Amazon VPC is your own private or public virtual network inside AWS cloud, where i can create subnet and deploye AWS ressources.
 
 ### How I used Amazon VPC in this project
 
-I uses Amazon VPC today to create to seperate vpc with an ec2 instance in each and settint up a Peering Connection so they can communicate without going to the public internet
-
-### One thing I didn't expect in this project was...
-
-I didn't expect to have to indicate to each vpc in the same region the ipv4 pravate address of the vpc perreing connection
+I uses Amazon VPC today to create to seperate vpc with an ec2 instance in each subnet and setting up a Peering Connection so they can communicate without going to the public internet
 
 ### - Set up my VPC
 
 I created the 2 VPC using 'VPC and more' mode so it can be faster and clearer.
 
-### - Create a Peering Connection
-
-In this step i'm going to create the VPC Peering connections so that there a connection between the two VPC's that enables to route traffic between them using they private IPv6 or IPv4 (in my case) addresses.
-
-### - Update Route Tables
-
-In this step I am going to set a way for traffic comig from VPC 1 to VPC 2 and an other way for traffic coming from VPC 2 to VPC 1
-
-### - Launch EC2 Instances
-
-In this step I launched two EC2 instance in each VPC's public subnet
+![alt text](https://github.com/dev126712/AWS-VPC/blob/35069809a5427ca8ca84e615f9236c8911bdea6c/VPCandMore.png)
 
 ---
 
@@ -47,11 +32,13 @@ I started my project by launching 2 VPC's (with there one seperate IPV4 CIDR BLO
 
 The CIDR blocks for VPC's 1 and 2 have two different IPv4 CIDR blocks because they have to be unique so that they not overlaping and communicate and exchange data otherwise it can cause conflit and connectivity issues.
 
+![alt text](https://github.com/dev126712/AWS-VPC/blob/35069809a5427ca8ca84e615f9236c8911bdea6c/2VPCs.png)
+
 ### I also launched 2 EC2 instances
 
-I didn't set up key pairs for these EC2 instances as recommanded because with EC2 Instance Connect manage the key pair connection is handled by AWS. When ethablishing a connection a one uses key pair is create with a expiration time
+I didn't set up key pairs for these EC2 instances as recommanded because with EC2 Instance Connect manage the key pair connection is handled by AWS. When ethablishing a connection an one time uses key pair is create with a expiration time for security measure.
 
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_11111111)
+![Image](https://github.com/dev126712/AWS-VPC/blob/64ff6e663947cefbd62319fe272b81431805677c/ec2s.png)
 
 ---
 
@@ -59,45 +46,48 @@ I didn't set up key pairs for these EC2 instances as recommanded because with EC
 
 ## VPC Peering
 
+In this step i'm going to create the VPC Peering connections so that there a connection between the two VPC's that enables to route traffic between them using they private IPv6 or IPv4 (in my case) addresses.
+
 A VPC peering connections is a networking connection that enable the communucation and allows exchange data between two defferent VPC (they must have 2 different IPv4 or IPv6 CIDR blocks). A VPC pering can be use to connect between VPC either if they are in the same region (in my case) in an other AWS account or in a different Regions.
 
 A VPC peering connections helps the transfert of data directly between 2 or more VPC with private addresses witout the need of using a gateway or vpn conneciont or the public internet. It allows the transfert of data in an private ip address space.
 
 The difference between a Requester and an Accepter in a peering connection is that the requester the Requester is the one sending the connections invatation in a peering connection and the Accepter is the VPC that receive the invitation, can either accepte it or decline it so the receive is the one finishing the connection
 
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_1cbb1b88)
+![Image](https://github.com/dev126712/AWS-VPC/blob/f72da5cd272a1f6ce1a1a1412fa6f1609b09f4f1/vpcpeering.png)
 
 ---
+
+## Create securtity group
+
+A security group is sets of rules that acts like a virtual firewall for controling which traffic can enter or leave a resource based on its IP address, protocols and port numbers. In my case I allow all ICMP (ping) traffic to access my ressources and SSH connections so i can connect to it.
+
+![Image](https://github.com/dev126712/AWS-VPC/blob/6cda24ee029481104d8544183dbd614e6de9007b/securitygroup.png)
 
 ## Updating route tables
 
-After accepting a peering connection, my VPCs' route tables need to be updated because they dont know to go to the VPC peering even though they know there's one
+After accepting a peering connection, my VPCs' route tables needed to be updated because they dont know how to go to the VPC peering even though they know there's one. A route comig from VPC 1 to VPC 2 and an other way for traffic coming from VPC 2 to VPC 1
+
 
 My VPCs' new routes have a destination of each other private IPv4 addresses and the routes' target was the VPC peering Connection. Meaning if one instaces want to communicate the other instances in a seperate VPC to flow the traffic to the VPC peering connection
 
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_4a9e8014)
+![Image](https://github.com/dev126712/AWS-VPC/blob/8a55a1f807e4b8d1c07b0b0544927fe1218b55f7/routetable.png)
 
 ---
-
 
 ### - Use EC2 Instance Connect
 
 In this step I connecting my ec2 instance that I launch using 'EC2 Instance Connect' in AWS.
 
-### - Connect to EC2 Instance 1
-
-I connect to my ec2
+![Image](https://github.com/dev126712/AWS-VPC/blob/c4bc21273e05aaaa3c6b6c3f73e4994597927d43/connect.png)
 
 ### - Test VPC Peering
 
 I'm testing connectivity between instance 1 to instance 2 using the ping command.
 
-
-## Troubleshooting Instance Connect
-
 Next, I used EC2 Instance Connect to connect to my ec2 instance because i dont have to manage the ssh key AWS does it for me.
 
-I was stopped from using 'EC2 Instance Connect' as my EC2 instance didn't have a public address because by default 'EC2 Instance Connect' connect to the instance using the public internet. 
+I was stopped from using 'EC2 Instance Connect' as my EC2 instance didn't have a public address because when a created the ec2s let auti-assign public ip on disable (by default) and 'EC2 Instance Connect' by default connect to the instance using the public internet. 
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_7685490c)
 
@@ -123,6 +113,12 @@ I had to update my second EC2 instance's security group because it didnt allow i
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_7a29d352)
 
+## Succefuly ping
+
+I succefuly test connectivity by pigning ec2 1 to ping ec2 2 using its private addrress and vice versa!
+
+![Image](https://github.com/dev126712/AWS-VPC/blob/bce7a3452152be10c0e5d4f561e5fb3b3e9b08a4/ping.png)
+
 ---
 
 ---
@@ -130,18 +126,6 @@ I had to update my second EC2 instance's security group because it didnt allow i
 # VPC Monitoring with Flow Logs
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_3e1e79a1)
-
----
-
-### - Set up Logs
-
-Set up a way to track all inbound and outbound network traffic.Set up a space that stores all of these records.
-
-### - Set IAM permissions for Logs
-
-I am going to set up a IAM role policy to give permission to flow log to send data to cloudwatch
-
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_e7fa8775)
 
 ---
 
@@ -169,32 +153,6 @@ A custom trust policy is uses for designing who or what is allows acces to the I
 
 ---
 
-## In the second part of my project...
-
-### - Ping testing and troubleshooting
-
-I am going to generate network traffic by using the ping command by pigning the instance #2 from instance #1
-
-### - Set up a peering connection
-
-.....
-
-### - Analyze flow logs
-
-I'm going to track the data that have been collected on my VPCs
-
----
-
-## Connectivity troubleshooting
-
-A ping reponse mean that the host is up and reachable
-
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_99d4ba42)
-
-I could receive ping replies if I ran the ping test using the other instance's public IP address, which means there communication between the 2 end host using the public internet
-
----
-
 ## Analyzing flow logs
 
 Flow logs tell us about the source, destination, the amount of data transferred, whether the traffic was accepted or rejected.
@@ -212,8 +170,6 @@ Logs Insights is a CloudWatch tool that analyzes your logs. Using queries to fil
 I ran the query "Return the top 10 byte transfers by source and destination IP addresses". This query analyzes the flow logs collected on EC2 instances and return the top 10 pair of ip addrresses based on the amount of data transfrered between them.
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_3e1e79a1)
-
----
 
 ---
 
@@ -295,40 +251,26 @@ The third command I ran was'aws s3 ls s3://nextwork-vpc-project-yourname' wich v
 
 ---
 
----
-
-
 ## VPC Endpoints
 
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_09bcaa8a)
+![Image](https://github.com/dev126712/AWS-VPC/blob/f6f22ffa79d641e59931066753f4af0a8ec4f5c1/endpoint.png)
 
 ---
-### - Architecture set up
-
-Create A VPC Endpoint and connecting it to my ec2 instance and my s3 bucket
-
-a voir
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d777)
 
 ---
 ### - Set up a Gateway
 
-Set up a way for your VPC and S3 to communicate direclty.
+Set up a way for your VPC and S3 to communicate direclty without the of the public internet.
 
 ### - Bucket policies
 
-In this step i'm going to test my VPC endpoint to make sure taht my ec2 do not the public internet to get access to my s3 bucket by denying or blocking all access from the bucket through internet except by my VPC Endpoint.
+In this step i'm going to test my VPC endpoint to make sure that my ec2 do need the public internet to get access to my s3 bucket by denying/blocking all access except from the VPC Endpoint.
 
 ### - Update route tables
 
 I'm going to see if i can access my s3 bucket through me ec2 instance like my policy is supposed to do.
-
-### - Validate endpoint conection
-
-.....
-
----
 
 ## Setting up a Gateway
 
@@ -340,8 +282,6 @@ An endpoint is a service that allows private connection between AWS services and
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_09bcaa8a)
 
----
-
 ## Bucket policies
 
 A bucket policy is a type of IAM policy designed for setting access permissions to an S3 bucket. 
@@ -350,9 +290,6 @@ My bucket policy will deny all access from the internet except from my vpc endpo
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_7316a13d)
 
----
-
-## Bucket policies
 
 Right after saving my bucket policy, my S3 bucket page showed 'denied access' warnings. This was because my policy made my s3 bucket not accesible from the internet even from  AWS Management Console.
 
@@ -360,26 +297,11 @@ I also had to update my route table because the only ways to access my s3 bucket
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4ec7821f)
 
----
 
 ## Route table updates
 
-To update my route table, I had to indicate that if my ec2 want to access my s3 bucket it had to go through my vpc endpoint instead.
+I updated my route table, I had to indicate that if my ec2 want to access my s3 bucket it had to go through my vpc endpoint instead.
 
 After updating my public subnet's route table, my terminal could return me the files in my bucket
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_d116818e)
-
----
-
-## Endpoint policies
-
-An endpoint policy is rules to gives acces or denying access to my AWS services
-
-I updated my endpoint's policy by the 'Effect' from allows to denied I could see the effect of this right away, because i couldn't access my s3 files from my ec2
-
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_3e1e79a3)
-
----
-
----
