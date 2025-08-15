@@ -138,98 +138,98 @@ I had to update my second EC2 instance's security group because it didnt allow i
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-peering_7a29d352)
 
 ---
+## VPC Monitoring with Flow Logs
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_3e1e79a1)
+
+### Set up Logs
+
+Set up a way to track all inbound and outbound network traffic.Set up a space that stores all of these records.
+
+### - Set IAM permissions for Logs
+
+I am going to set up a IAM role policy to give permission to flow log to send data to cloudwatch
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_e7fa8775)
+
+## Logs
+
+Logs are files that keep track everything goig on in your systeme from login to errors. It's the go-to place to understand what's going on with your systems, troubleshoot problems, and keep an eye on who’s doing what.
+
+Log groups are like a folder for related resources otherwise they all logs are mixed.
+
+### I set up a flow log for VPC 1
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_e8398869)
+
+## IAM Policy and Roles
+
+I created an IAM policy because by default flows logs do not have the permission  to write logs and send them to CloudWatch.
+
+ I also created an IAM role because services like flow logs have to be associated with a role. It to give only VPC flows log those permission to record and upload logs
+
+A custom trust policy is uses for designing who or what is allows acces to the IAM role
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_4334d777)
+
+### - Ping testing and troubleshooting
+
+I am going to generate network traffic by using the ping command by pigning the instance #2 from instance #1
+
+### - Analyze flow logs
+
+I'm going to track the data that have been collected on my VPCs
+
+## Connectivity troubleshooting
+
+A ping reponse mean that the host is up and reachable
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_99d4ba42)
+
+I could receive ping replies if I ran the ping test using the other instance's public IP address, which means there communication between the 2 end host using the public internet
+
+
+## Connectivity troubleshooting
+
+....
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_4ec7821f)
 
 ---
+
+## Analyzing flow logs
+
+Flow logs tell us about the source, destination, the amount of data transferred, whether the traffic was accepted or rejected.
+
+For example, the flow log I've captured tells us the traffic from 147.185.133.33 to 10.1.11.171 was accepted by the security group and network ACL of my VPC
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_d116818e)
+
+---
+
+## Logs Insights
+
+Logs Insights is a CloudWatch tool that analyzes your logs. Using queries to filter, process and combine data to help you troubleshoot problems or better understand your network traffic.
+
+I ran the query "Return the top 10 byte transfers by source and destination IP addresses". This query analyzes the flow logs collected on EC2 instances and return the top 10 pair of ip addrresses based on the amount of data transfrered between them.
+
+![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-monitoring_3e1e79a1)
 
 
 <img src="https://cdn.prod.website-files.com/677c400686e724409a5a7409/6790ad949cf622dc8dcd9fe4_nextwork-logo-leather.svg" alt="NextWork" width="300" />
 
-# VPC Endpoints
-
-**Project Link:** [View Project](http://learn.nextwork.org/projects/aws-networks-endpoints)
-
-**Author:** Alexandre St-fort  
-**Email:** stforta1@gmail.com
-
----
-
 ## VPC Endpoints
-
-![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_09bcaa8a)
-
----
-
-## Introducing Today's Project!
-
-### What is Amazon VPC?
-
-.....
-
-### How I used Amazon VPC in this project
-
-....
-
-### One thing I didn't expect in this project was...
-
-......
-
-### This project took me...
-
-.....
-
----
-
-## In the first part of my project...
 
 ### Step 1 - Architecture set up
 
-Create A VPC Endpoint and connecting it to my ec2 instance and my s3 bucket
-
-### Step 2 - Connect to EC2 instance
-
-.......
-
-### Step 3 - Set up access keys
-
-.........
-
-### Step 4 - Interact with S3 bucket
-
-.......
-
----
+Create A VPC Endpoint and connecting it to my ec2 instance in my VPC 1 and my s3 bucket
 
 ## Architecture set up
 
-......
-
-.....
-
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d777)
 
----
 
-## Access keys
 
-### Credentials
-
-.......
-
-........
-
-.........
-
-### Best practice
-
-........
-
----
-
-## Connecting to my S3 bucket
-
-.........
-
-...........
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d778)
 
@@ -237,7 +237,6 @@ Create A VPC Endpoint and connecting it to my ec2 instance and my s3 bucket
 
 ## Connecting to my S3 bucket
 
-.......
 
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_4334d779)
 
@@ -245,31 +244,24 @@ Create A VPC Endpoint and connecting it to my ec2 instance and my s3 bucket
 
 ## Uploading objects to S3
 
-........
-
-............
-
-..........
-
 ![Image](http://learn.nextwork.org/thrilled_silver_playful_raspberry/uploads/aws-networks-endpoints_3e1e79a2)
 
----
 
 ## In the second part of my project...
 
-### Step 5 - Set up a Gateway
+### - Set up a Gateway
 
 Set up a way for your VPC and S3 to communicate direclty.
 
-### Step 6 - Bucket policies
+### - Bucket policies
 
 In this step i'm going to test my VPC endpoint to make sure taht my ec2 do not the public internet to get access to my s3 bucket by denying or blocking all access from the bucket through internet except by my VPC Endpoint.
 
-### Step 7 - Update route tables
+### - Update route tables
 
 I'm going to see if i can access my s3 bucket through me ec2 instance like my policy is supposed to do.
 
-### Step 8 - Validate endpoint conection
+### - Validate endpoint conection
 
 .....
 
