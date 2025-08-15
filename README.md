@@ -7,8 +7,6 @@
 
 ![alt text](https://github.com/dev126712/AWS-VPC/blob/1addf6212559a84062714e4dda45815ba98ca324/VpcPeering.png)
 
----
-![alt text]()
 
 ### What is Amazon VPC?
 
